@@ -1,12 +1,12 @@
-import tkinter as tk
-from tkinter import filedialog as fd
-from tkinter import ttk
-from PIL import ImageTk, Image
-from datetime import datetime
+import tkinter as tk # Library for GUI
+from tkinter import filedialog as fd # for opening file window
+from tkinter import ttk # improve button appearance
+#from PIL import ImageTk, Image
+from datetime import datetime # for timestamp
 
-LARGE_FONT = ("Verdana", 16)
+LARGE_FONT = ("Verdana", 16) # define large font for GUI
 
-img_path = ''
+img_path = '' # Image path for analysis
 
 dateTimeObj = datetime.now()
 
