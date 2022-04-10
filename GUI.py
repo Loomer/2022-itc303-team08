@@ -108,9 +108,13 @@ class ResultsPage(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-
+        
         title = tk.Label(self, text="Severity Report", font=LARGE_FONT)
         title.place(relx=.5, rely=.1,anchor= tk.CENTER)
+
+        filename_label = tk.Label(self, text = img_path)
+        filename_label.place(relx=.5, rely=.6,anchor= tk.CENTER)
+
 
         severity_label = tk.Label(self, text="Severity Score: ")
         severity_label.place(relx=.5, rely=.7,anchor= tk.CENTER)
@@ -134,14 +138,14 @@ class PageTwo(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Page Two!!!", font=LARGE_FONT)
+        label = tk.Label(self, text="Page 2", font=LARGE_FONT)
         label.grid(row = 0, column = 0, pady = 2, padx = 2)
 
-        button1 = ttk.Button(self, text="Back to Home",
+        button1 = ttk.Button(self, text="Start Page",
                             command=lambda: controller.show_frame(StartPage))
         button1.grid(row = 1, column = 0, pady = 2, padx = 2)
 
-        button2 = ttk.Button(self, text="Page One",
+        button2 = ttk.Button(self, text="Results Page",
                             command=lambda: controller.show_frame(ResultsPage))
         button2.grid(row = 2, column = 0, pady = 2, padx = 2)
 
