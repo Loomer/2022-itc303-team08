@@ -18,7 +18,7 @@ class LungXapp(tk.Tk): # class for application
         tk.Tk.__init__(self, *args, **kwargs)
 
         tk.Tk.wm_title(self, "LungX") # Window Title
-        tk.Tk.wm_geometry(self, '800x450') # Window Dimensions
+        tk.Tk.wm_geometry(self, '1000x600') # Window Dimensions
 
         container = tk.Frame(self) # to display frames in
         
@@ -76,8 +76,8 @@ class StartPage(tk.Frame): # Arrange Start Page
         upload_button.place(relx=.5, rely=.7,anchor= tk.CENTER)
 
         # Display Image
-        canvas = Canvas(self, bg="blue", width = 100, height = 100)  
-        canvas.pack()
+        canvas = Canvas(self, bg="blue", width = 250, height = 250)  
+        canvas.place(relx=.5, rely=.4,anchor= tk.CENTER)
 
         img = Image.open("C:/Users/Cezanne/Pictures/Screenshot (1).png")
 
