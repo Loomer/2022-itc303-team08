@@ -1,7 +1,8 @@
 import tkinter as tk # Library for GUI
 from tkinter import filedialog as fd # for opening file window
 from tkinter import ttk # improve button appearance
-#from PIL import ImageTk, Image
+from tkinter import Canvas
+from PIL import ImageTk, Image
 from datetime import datetime # for timestamp
 
 LARGE_FONT = ("Verdana", 16) # define large font for GUI
@@ -50,9 +51,9 @@ class StartPage(tk.Frame): # Arrange Start Page
         tk.Frame.__init__(self, parent)
         
         title = tk.Label(self, text="LungX", font=LARGE_FONT) # Title in Frame
-        title.place(relx=.5, rely=.1,anchor= tk.CENTER) # Position in center on x-axis and 10% down y-axis
+        title.place(relx=.5, rely=.1,anchor= tk.CENTER) # Position in centre on x-axis and 10% down y-axis
 
-        filename_label = tk.Label(self, text = '') # Label for Filenaem after selection
+        filename_label = tk.Label(self, text = '') # Label for Filename after selection
 
         # Create button and assign functions
         upload_button = ttk.Button(self, text="Upload File...",
@@ -73,6 +74,16 @@ class StartPage(tk.Frame): # Arrange Start Page
 
         # Intial placement of Upload button
         upload_button.place(relx=.5, rely=.7,anchor= tk.CENTER)
+
+        # Display Image
+        canvas = Canvas(self, bg="blue", width = 100, height = 100)  
+        canvas.pack()
+
+        img = Image.open("C:/Users/Cezanne/Pictures/Screenshot (1).png")
+
+        img = img.resize((750, 422))
+        imgtk = ImageTk.PhotoImage(img)  
+        canvas.create_image(10, 10, image=imgtk)
 
  
 # image selection method. Opens a window in File explorer and saves selected image's filepath
