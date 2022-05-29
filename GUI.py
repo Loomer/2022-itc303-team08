@@ -18,7 +18,7 @@ class LungXapp(tk.Tk): # class for application
         tk.Tk.__init__(self, *args, **kwargs)
 
         tk.Tk.wm_title(self, "LungX") # Window Title
-        tk.Tk.wm_geometry(self, '1000x600') # Window Dimensions
+        tk.Tk.wm_geometry(self, '800x600') # Window Dimensions
 
         container = tk.Frame(self) # to display frames in
         
@@ -79,13 +79,6 @@ class StartPage(tk.Frame): # Arrange Start Page
         # Display Image
         canvas = Canvas(self, width = 250, height = 250)  
         canvas.place(relx=.5, rely=.4,anchor= tk.CENTER)
-
-##        img = Image.open("C:/Users/Cezanne/Pictures/Screenshot (1).png")
-##        img = img.resize((250, 250))
-##        imgtk = ImageTk.PhotoImage(img)
-##        self.imgtk = imgtk # to prevent the image garbage collected.
-##        canvas.create_image(0, 0, anchor=tk.NW ,image=imgtk)
-
 
  
 # image selection method. Opens a window in File explorer and saves selected image's filepath
