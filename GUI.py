@@ -62,9 +62,10 @@ class StartPage(tk.Frame): # Arrange Start Page
                                        # reposition upload button and add analyse button                                       # 
                                        select_file(),
                                        filename_label.config(text = img_path),
-                                       filename_label.place(relx=.5, rely=.6,anchor= tk.CENTER),
+                                       filename_label.place(relx=.5, rely=.65,anchor= tk.CENTER),
                                        upload_button.place(relx=.4, rely=.7,anchor= tk.CENTER),
-                                       analyse_button.place(relx=.6, rely=.7,anchor= tk.CENTER)
+                                       analyse_button.place(relx=.6, rely=.7,anchor= tk.CENTER),
+                                       canvas.create_image(0, 0, anchor=tk.NW ,image=load_image(img_path, self))
                                        ])
 
         # Create analysis button
@@ -76,14 +77,15 @@ class StartPage(tk.Frame): # Arrange Start Page
         upload_button.place(relx=.5, rely=.7,anchor= tk.CENTER)
 
         # Display Image
-        canvas = Canvas(self, bg="blue", width = 250, height = 250)  
+        canvas = Canvas(self, width = 250, height = 250)  
         canvas.place(relx=.5, rely=.4,anchor= tk.CENTER)
 
-        img = Image.open("C:/Users/Cezanne/Pictures/Screenshot (1).png")
+##        img = Image.open("C:/Users/Cezanne/Pictures/Screenshot (1).png")
+##        img = img.resize((250, 250))
+##        imgtk = ImageTk.PhotoImage(img)
+##        self.imgtk = imgtk # to prevent the image garbage collected.
+##        canvas.create_image(0, 0, anchor=tk.NW ,image=imgtk)
 
-        img = img.resize((750, 422))
-        imgtk = ImageTk.PhotoImage(img)  
-        canvas.create_image(10, 10, image=imgtk)
 
  
 # image selection method. Opens a window in File explorer and saves selected image's filepath
@@ -112,6 +114,13 @@ def select_file():
 ##        title='Selected File',
 ##        message=filename
 ##    )
+
+def load_image(path, root):
+    img = Image.open(path)
+    img = img.resize((250, 250))
+    imgtk = ImageTk.PhotoImage(img)
+    root.imgtk = imgtk # to prevent the image garbage collected.
+    return imgtk
 
 
 # for results of assessments
