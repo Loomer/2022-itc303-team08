@@ -22,8 +22,8 @@ class LungXapp(tk.Tk): # class for application
         
 ##        tk.Tk.__init__(self, *args, **kwargs)
 ##
-##        tk.Tk.wm_title(self, "LungX") # Window Title
-##        tk.Tk.wm_geometry(self, '800x600') # Window Dimensions
+        tk.Tk.wm_title(self, "LungX") # Window Title
+        tk.Tk.wm_geometry(self, '800x600') # Window Dimensions
 ##
 ##        container = tk.Frame(self) # to display frames in
 ##        
