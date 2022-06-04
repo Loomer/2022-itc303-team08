@@ -1,13 +1,18 @@
 import tkinter as tk # Library for GUI
+import os
 from tkinter import filedialog as fd # for opening file window
 from tkinter import ttk # improve button appearance
 from tkinter import Canvas
 from PIL import ImageTk, Image
 from datetime import datetime # for timestamp
+import time
+from fpdf import FPDF
 
 LARGE_FONT = ("Verdana", 16) # define large font for GUI
 
 img_path = '' # Image path for analysis
+
+destination_path = '' # intial destination folder location
 
 dateTimeObj = datetime.now() # get timestamp
 
@@ -29,7 +34,7 @@ class LungXapp(tk.Tk): # class for application
 
         self.frames = {}
 
-        for F in (StartPage, ResultsPage, PageTwo): # All different frames
+        for F in (StartPage, ResultsPage): # All different frames
 
             frame = F(container, self)
 
@@ -53,7 +58,7 @@ class StartPage(tk.Frame): # Arrange Start Page
         title = tk.Label(self, text="LungX", font=LARGE_FONT) # Title in Frame
         title.place(relx=.5, rely=.1,anchor= tk.CENTER) # Position in centre on x-axis and 10% down y-axis
 
-        filename_label = tk.Label(self, text = '') # Label for Filename after selection
+        filename_label = tk.Label(self, text = '') # Label for Filename after selection\
 
         # Create button and assign functions
         upload_button = ttk.Button(self, text="Upload File...",
@@ -71,7 +76,7 @@ class StartPage(tk.Frame): # Arrange Start Page
         # Create analysis button
         analyse_button = ttk.Button(self, text="Analyse Image...",
                                     #command swaps to results frame
-                            command=lambda: controller.show_frame(ResultsPage))
+                            command=lambda: [controller.show_frame(ResultsPage)])
 
         # Intial placement of Upload button
         upload_button.place(relx=.5, rely=.7,anchor= tk.CENTER)
@@ -82,7 +87,7 @@ class StartPage(tk.Frame): # Arrange Start Page
 
  
 # image selection method. Opens a window in File explorer and saves selected image's filepath
-# global image filepath variable
+# global image filepath iable
 def select_file():
     filetypes = ( # file type resttrictions
         ('JPEG', '*.jpg'),
@@ -100,13 +105,12 @@ def select_file():
         filetypes=filetypes)
 
     global img_path
+    global destination_path
+    
     img_path = filename
+    destination_path = os.path.dirname(img_path)
+    print(destination_path)
 
-
-##    showinfo(
-##        title='Selected File',
-##        message=filename
-##    )
 
 def load_image(path, root):
     img = Image.open(path)
@@ -115,53 +119,86 @@ def load_image(path, root):
     root.imgtk = imgtk # to prevent the image garbage collected.
     return imgtk
 
+def generate_report(path):
+
+    # save FPDF() class into a
+    # variable pdf
+    pdf = FPDF()
+
+    # Add a page
+    pdf.add_page()
+
+    # set style and size of font
+    pdf.set_font("Arial", size = 20)
+
+    # create a cell
+    pdf.cell(200, 20, txt = "LungX Report",
+                    ln = 1, align = 'L')
+
+    pdf.set_font("Arial", size = 12)
+
+    # add another cell
+    pdf.cell(200, 10, txt = "Image URL: " + path,
+                    ln = 2, align = 'L')
+
+    pdf.image(path, 15, 40, 110, 110)
+
+    timestr = time.strftime("%Y%m%d_%H%M%S")
+
+    pdf.output(timestr + 'lungxreport.pdf')
+
 
 # for results of assessments
 class ResultsPage(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+
         
-        title = tk.Label(self, text="Severity Report", font=LARGE_FONT)
+        title = tk.Label(self, text="LungX COVID Pneumonia Screening Report", font=LARGE_FONT)
         title.place(relx=.5, rely=.1,anchor= tk.CENTER)
 
         filename_label = tk.Label(self, text = img_path)
         filename_label.place(relx=.5, rely=.6,anchor= tk.CENTER)
 
 
-        severity_label = tk.Label(self, text="Severity Score: ")
+        severity_label = tk.Label(self, text="Report Findings: ")
         severity_label.place(relx=.5, rely=.7,anchor= tk.CENTER)
+
+        # Display Image
+##        canvas = Canvas(self, width = 250, height = 250)  
+##        canvas.place(relx=.5, rely=.4,anchor= tk.CENTER)
+##        canvas.create_image(0, 0, anchor=tk.NW ,image=load_image(img_path, self))
 
         # Display timestamp on report generation
         timestamp = tk.Label(self, text= str(dateTimeObj))
-        timestamp.place(relx=.5, rely=.8,anchor= tk.CENTER)
+        timestamp.place(relx=.5, rely=.55,anchor= tk.CENTER)
 
- 
-
-        button1 = ttk.Button(self, text="Back to Home",
+        button1 = ttk.Button(self, text="Back",
                             command=lambda: controller.show_frame(StartPage))
         button1.place(relx=.4, rely=.9,anchor= tk.CENTER)
 
-        button2 = ttk.Button(self, text="Page Two",
-                            command=lambda: controller.show_frame(PageTwo))
+        button2 = ttk.Button(self, text="Save Report",
+                            command=lambda: generate_report(img_path))
         button2.place(relx=.6, rely=.9,anchor= tk.CENTER)
+        
+        destination_title = tk.Label(self, text = "Destination Folder (Original image location by default): ")
+        destination_title.place(relx=.5, rely=.7,anchor= tk.CENTER)
+        
+        destination_label = tk.Label(self, text = destination_path)
+        destination_label.place(relx=.5, rely=.75,anchor= tk.CENTER)
 
+        button3 = ttk.Button(self, text="Change...",
+                            command=lambda:[askdir(), destination_label.config(text = destination_path), destination_label.place(relx=.5, rely=.75,anchor= tk.CENTER)])
+                                             
+        button3.place(relx=.5, rely=.8,anchor= tk.CENTER)
 
-class PageTwo(tk.Frame):
+def askdir():
+  dirname = fd.askdirectory()
+  global destination_path
 
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Page 2", font=LARGE_FONT)
-        label.grid(row = 0, column = 0, pady = 2, padx = 2)
-
-        button1 = ttk.Button(self, text="Start Page",
-                            command=lambda: controller.show_frame(StartPage))
-        button1.grid(row = 1, column = 0, pady = 2, padx = 2)
-
-        button2 = ttk.Button(self, text="Results Page",
-                            command=lambda: controller.show_frame(ResultsPage))
-        button2.grid(row = 2, column = 0, pady = 2, padx = 2)
-
+  destination_path = dirname
+  print(destination_path)
 
 # Run app
 app = LungXapp()
