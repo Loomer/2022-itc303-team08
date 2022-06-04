@@ -166,44 +166,73 @@ class ResultsPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        
-        title = tk.Label(self, text="LungX COVID Pneumonia Screening Report", font=LARGE_FONT)
-        title.place(relx=.5, rely=.1,anchor= tk.CENTER)
+        container = self
+              
+        canvas = tk.Canvas(container)
+        scrollbar = ttk.Scrollbar(container, orient="vertical", command=canvas.yview)
+        scrollable_frame = ttk.Frame(canvas)
 
-        filename_label = tk.Label(self, text = img_path)
-        filename_label.place(relx=.5, rely=.6,anchor= tk.CENTER)
+        scrollable_frame.bind(
+            "<Configure>",
+            lambda e: canvas.configure(
+                scrollregion=canvas.bbox("all")
+            )
+        )
 
+        canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
 
-        severity_label = tk.Label(self, text="Report Findings: ")
-        severity_label.place(relx=.5, rely=.7,anchor= tk.CENTER)
+        canvas.configure(yscrollcommand=scrollbar.set)
 
-        # Display Image
-        canvas = Canvas(self, width = 250, height = 250)  
-        canvas.place(relx=.4, rely=.4,anchor= tk.CENTER)
+        title = tk.Label(self, text="LungX COVID Pneumonia Screening Report", font=LARGE_FONT).pack(padx= 20, pady=20, anchor = "w")
+
+        img_path_label = tk.Label(self, text=img_path).pack(padx= 20, pady=10, anchor = "w")
+
+        canvas = Canvas(self, width = 250, height = 250).pack(padx= 20, pady=10, anchor = "w")
         canvas.create_image(0, 0, anchor=tk.NW ,image=load_image(img_path, self))
 
-        # Display timestamp on report generation
-        timestamp = tk.Label(self, text= str(dateTimeObj))
-        timestamp.place(relx=.5, rely=.55,anchor= tk.CENTER)
+        for i in range(50):
+            ttk.Label(scrollable_frame, text="Sample scrolling label").pack()
 
-        button1 = ttk.Button(self, text="Back",
-                            command=lambda: controller.show_frame(StartPage))
-        button1.place(relx=.4, rely=.9,anchor= tk.CENTER)
+        container.pack()
+        canvas.pack(side="left", fill="both", expand=True)
+        scrollbar.pack(side="right", fill="y")
 
-        button2 = ttk.Button(self, text="Save Report",
-                            command=lambda: generate_report(img_path))
-        button2.place(relx=.6, rely=.9,anchor= tk.CENTER)
-        
-        destination_title = tk.Label(self, text = "Destination Folder (Original image location by default): ")
-        destination_title.place(relx=.5, rely=.7,anchor= tk.CENTER)
-        
-        destination_label = tk.Label(self, text = destination_path)
-        destination_label.place(relx=.5, rely=.75,anchor= tk.CENTER)
-
-        button3 = ttk.Button(self, text="Change...",
-                            command=lambda:[askdir(), destination_label.config(text = destination_path), destination_label.place(relx=.5, rely=.75,anchor= tk.CENTER)])
-                                             
-        button3.place(relx=.5, rely=.8,anchor= tk.CENTER)
+##        title.place(relx=.5, rely=.1,anchor= tk.CENTER)
+##
+##        filename_label = tk.Label(self, text = img_path)
+##        filename_label.place(relx=.5, rely=.6,anchor= tk.CENTER)
+##
+##
+##        severity_label = tk.Label(self, text="Report Findings: ")
+##        severity_label.place(relx=.5, rely=.7,anchor= tk.CENTER)
+##
+##        # Display Image
+##        canvas = Canvas(self, width = 250, height = 250)  
+##        canvas.place(relx=.4, rely=.4,anchor= tk.CENTER)
+##        canvas.create_image(0, 0, anchor=tk.NW ,image=load_image(img_path, self))
+##
+##        # Display timestamp on report generation
+##        timestamp = tk.Label(self, text= str(dateTimeObj))
+##        timestamp.place(relx=.5, rely=.55,anchor= tk.CENTER)
+##
+##        button1 = ttk.Button(self, text="Back",
+##                            command=lambda: controller.show_frame(StartPage))
+##        button1.place(relx=.4, rely=.9,anchor= tk.CENTER)
+##
+##        button2 = ttk.Button(self, text="Save Report",
+##                            command=lambda: generate_report(img_path))
+##        button2.place(relx=.6, rely=.9,anchor= tk.CENTER)
+##        
+##        destination_title = tk.Label(self, text = "Destination Folder (Original image location by default): ")
+##        destination_title.place(relx=.5, rely=.7,anchor= tk.CENTER)
+##        
+##        destination_label = tk.Label(self, text = destination_path)
+##        destination_label.place(relx=.5, rely=.75,anchor= tk.CENTER)
+##
+##        button3 = ttk.Button(self, text="Change...",
+##                            command=lambda:[askdir(), destination_label.config(text = destination_path), destination_label.place(relx=.5, rely=.75,anchor= tk.CENTER)])
+##                                             
+##        button3.place(relx=.5, rely=.8,anchor= tk.CENTER)
 
 def askdir():
   dirname = fd.askdirectory()
