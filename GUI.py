@@ -24,7 +24,7 @@ class LungXapp(tk.Tk): # class for application
 
         tk.Tk.wm_title(self, "LungX") # Window Title
         tk.Tk.wm_geometry(self, '800x600') # Window Dimensions
-##
+
 ##        container = tk.Frame(self) # to display frames in
 ##        
 ##        # container formatting
@@ -33,7 +33,22 @@ class LungXapp(tk.Tk): # class for application
 ##        container.grid_columnconfigure(0, weight=1)
 ##
 ##        self.frames = {}
-        
+##
+##        for F in (StartPage, ResultsPage): # All different frames
+##
+##            frame = F(container, self)
+##
+##            self.frames[F] = frame
+##
+##            frame.grid(row=0, column=0, sticky="nsew")
+##
+##
+##        self.show_frame(StartPage) # Show StartPage on start up
+##
+##    def show_frame(self, cont): # Method to push frame to the top
+##        frame = self.frames[cont]
+##        frame.tkraise()
+
         self.container = tk.Frame(self)
         self.container.pack(fill="both", expand=True)
         self.current_frame = None
@@ -45,21 +60,6 @@ class LungXapp(tk.Tk): # class for application
 
         self.current_frame = new_frame_class(self.container, controller=self)
         self.current_frame.pack(fill="both", expand=True)
-
-        for F in (StartPage, ResultsPage): # All different frames
-
-            frame = F(container, self)
-
-            self.frames[F] = frame
-
-            frame.grid(row=0, column=0, sticky="nsew")
-
-
-        self.show_frame(StartPage) # Show StartPage on start up
-
-    def show_frame(self, cont): # Method to push frame to the top
-        frame = self.frames[cont]
-        frame.tkraise()
 
 class StartPage(tk.Frame): # Arrange Start Page
 
@@ -178,9 +178,9 @@ class ResultsPage(tk.Frame):
         severity_label.place(relx=.5, rely=.7,anchor= tk.CENTER)
 
         # Display Image
-##        canvas = Canvas(self, width = 250, height = 250)  
-##        canvas.place(relx=.5, rely=.4,anchor= tk.CENTER)
-##        canvas.create_image(0, 0, anchor=tk.NW ,image=load_image(img_path, self))
+        canvas = Canvas(self, width = 250, height = 250)  
+        canvas.place(relx=.4, rely=.4,anchor= tk.CENTER)
+        canvas.create_image(0, 0, anchor=tk.NW ,image=load_image(img_path, self))
 
         # Display timestamp on report generation
         timestamp = tk.Label(self, text= str(dateTimeObj))
