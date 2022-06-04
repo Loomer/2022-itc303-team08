@@ -6,6 +6,7 @@ from tkinter import Canvas
 from PIL import ImageTk, Image
 from datetime import datetime # for timestamp
 import time
+from time import strftime
 from fpdf import FPDF
 
 LARGE_FONT = ("Verdana", 16) # define large font for GUI
@@ -183,15 +184,17 @@ class ResultsPage(tk.Frame):
 
         canvas.configure(yscrollcommand=scrollbar.set)
 
-        title = tk.Label(self, text="LungX COVID Pneumonia Screening Report", font=LARGE_FONT).pack(padx= 20, pady=20, anchor = "w")
+        title = tk.Label(scrollable_frame, text="LungX COVID-19 Pneumonia Screening Report", font=LARGE_FONT).pack(padx= 20, pady=20, anchor = "w")
 
-        img_path_label = tk.Label(self, text=img_path).pack(padx= 20, pady=10, anchor = "w")
+        img_path_label = tk.Label(scrollable_frame, text=img_path).pack(padx= 20, anchor = "w")
+        timestamp_label = tk.Label(scrollable_frame, text= time.strftime("%A, %d %B %Y, %I:%M:%S %p (%Z; UTC%z)")).pack(padx= 20, anchor = "w")
 
-        canvas = Canvas(self, width = 250, height = 250).pack(padx= 20, pady=10, anchor = "w")
-        canvas.create_image(0, 0, anchor=tk.NW ,image=load_image(img_path, self))
+        img_canvas = Canvas(scrollable_frame, width = 250, height = 250)
+        img_canvas.pack(padx= 20, pady=10, anchor = "w")
+        img_canvas.create_image(0, 0, anchor=tk.NW ,image=load_image(img_path, self))
 
-        for i in range(50):
-            ttk.Label(scrollable_frame, text="Sample scrolling label").pack()
+        report_findings_label = tk.Text(scrollable_frame, text= "Signs of COVID-19 pneumonia found in patient lungs.\n\nResults suggests patient is COVID-19 positive or is still experiencing residual side effects of COVID-19 pneumonia").pack(padx= 20, pady=20, anchor = "w")
+
 
         container.pack()
         canvas.pack(side="left", fill="both", expand=True)
