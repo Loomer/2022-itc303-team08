@@ -20,19 +20,31 @@ class LungXapp(tk.Tk): # class for application
 
     def __init__(self, *args, **kwargs): # excute on call
         
+##        tk.Tk.__init__(self, *args, **kwargs)
+##
+##        tk.Tk.wm_title(self, "LungX") # Window Title
+##        tk.Tk.wm_geometry(self, '800x600') # Window Dimensions
+##
+##        container = tk.Frame(self) # to display frames in
+##        
+##        # container formatting
+##        container.pack(side = "top", fill = "both", expand = "True")
+##        container.grid_rowconfigure(0, weight=1)
+##        container.grid_columnconfigure(0, weight=1)
+##
+##        self.frames = {}
         tk.Tk.__init__(self, *args, **kwargs)
+        self.container = tk.Frame(self)
+        self.container.pack(fill="both", expand=True)
+        self.current_frame = None
+        self.show_frame(StartPage)
 
-        tk.Tk.wm_title(self, "LungX") # Window Title
-        tk.Tk.wm_geometry(self, '800x600') # Window Dimensions
+    def show_frame(self, new_frame_class):
+        if self.current_frame:
+            self.current_frame.destroy()
 
-        container = tk.Frame(self) # to display frames in
-        
-        # container formatting
-        container.pack(side = "top", fill = "both", expand = "True")
-        container.grid_rowconfigure(0, weight=1)
-        container.grid_columnconfigure(0, weight=1)
-
-        self.frames = {}
+        self.current_frame = new_frame_class(self.container, controller=self)
+        self.current_frame.pack(fill="both", expand=True)
 
         for F in (StartPage, ResultsPage): # All different frames
 
