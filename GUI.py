@@ -20,8 +20,8 @@ class LungXapp(tk.Tk): # class for application
 
     def __init__(self, *args, **kwargs): # excute on call
         
-##        tk.Tk.__init__(self, *args, **kwargs)
-##
+        tk.Tk.__init__(self, *args, **kwargs)
+
         tk.Tk.wm_title(self, "LungX") # Window Title
         tk.Tk.wm_geometry(self, '800x600') # Window Dimensions
 ##
@@ -33,7 +33,7 @@ class LungXapp(tk.Tk): # class for application
 ##        container.grid_columnconfigure(0, weight=1)
 ##
 ##        self.frames = {}
-        tk.Tk.__init__(self, *args, **kwargs)
+        
         self.container = tk.Frame(self)
         self.container.pack(fill="both", expand=True)
         self.current_frame = None
