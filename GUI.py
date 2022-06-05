@@ -91,24 +91,7 @@ class StartPage(tk.Frame): # Arrange Start Page
         # Display Image
         canvas = Canvas(self, width = 250, height = 250)  
         canvas.place(relx=.5, rely=.4,anchor= tk.CENTER)
-
-
-def upload_button_command(root, filename_label, upload_button, analyse_button, canvas):
-
-    if(img_path == ''):
-        pass
     
-    elif(os.path.exists(img_path)):
-
-        filename_label.config(text = img_path)
-        filename_label.place(relx=.5, rely=.65,anchor= tk.CENTER)
-        upload_button.place(relx=.4, rely=.7,anchor= tk.CENTER)
-        analyse_button.place(relx=.6, rely=.7,anchor= tk.CENTER)
-        canvas.create_image(0, 0, anchor=tk.NW ,image=load_image(img_path, root))
-
-    else:
-        pass
-        
     
 # for results of assessments
 class ResultsPage(tk.Frame):
@@ -241,12 +224,10 @@ def generate_report(result):
 
     global fname
 
-    
     timestr = time.strftime("%Y%m%d_%H%M%S")
     
     fname = timestr + 'lungxreport.pdf'
 
-    
     # save FPDF() class into a
     # variable pdf
     pdf = FPDF()
@@ -301,6 +282,22 @@ def askdir():
 def get_textbox_input(user_comments_text):
     global user_comments 
     user_comments = user_comments_text.get("1.0", "end-1c")
+
+def upload_button_command(root, filename_label, upload_button, analyse_button, canvas):
+
+    if(img_path == ''):
+        pass
+    
+    elif(os.path.exists(img_path)):
+
+        filename_label.config(text = img_path)
+        filename_label.place(relx=.5, rely=.65,anchor= tk.CENTER)
+        upload_button.place(relx=.4, rely=.7,anchor= tk.CENTER)
+        analyse_button.place(relx=.6, rely=.7,anchor= tk.CENTER)
+        canvas.create_image(0, 0, anchor=tk.NW ,image=load_image(img_path, root))
+
+    else:
+        pass
 
 # Run app
 app = LungXapp()
