@@ -2,23 +2,27 @@ TDC DOCUMENTATION
 
 ---------------CNN Model---------------
 
-ï The file named ìLoading_Data.ipynbî contains CNN model development
-ï This includes:
+‚Ä¢ The file named ‚Äúml_manu.ipynb‚Äù contains CNN model
+‚Ä¢ This includes:
 	o Importing Data
 	o Cleaning and normalising data
 	o Assembling Data into Training/Test Sets
 	o Assembling convolutional layers
 	o Training the model
 	o Exporting model and testing external data with it
-ï ProgX acknowledges that while the model cannot yet accurately assessment or differentiate the steps involved in CNN model development are still present
+‚Ä¢ The Model has been exported using Tensorflow Lite, however the final model is much to large to be stored on Bitbucket
+‚Ä¢ Instead the Google Collab sheet has been "ml_manu.ipynb" contains the code used to create and export the model.
+‚Ä¢ The final version is on the Team's Google Drive folder.
 
 
 
 -----------------GUI-----------------
 
-ï The GUI.py file contains a basic GUI that gives an overview of how the LungX application will run on a desktop
-ï It makes use of the built in Tkinter library to assemble the UI
-ï The program will open a Window prompting the user to upload a file by clicking a button labelled upload.
-ï The button will open a file explorer window for the user to select an image file
-ï After the upload the window will display a new button ìAnalyseî
-ï When the user clicks the analyse button the window will display the results frame with a mock-up of results.
+‚Ä¢ The GUI.py file in the LungX_EA folder has the final version of the GUI
+‚Ä¢ It makes use of the built in Tkinter library to assemble the UI
+‚Ä¢ The program will open a Window prompting the user to upload a file by clicking a button labelled upload.
+‚Ä¢ The button will open a file explorer window for the user to select an image file
+‚Ä¢ After the upload the window will display a new button ‚ÄúAnalyse‚Äù
+‚Ä¢ When the user clicks the analyse button the window will display the results frame with a mock-up of results.
+‚Ä¢ After analyzing two new buttons will display, 'Add Comment' and 'Save'
+‚Ä¢ After saving the program will close
