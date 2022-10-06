@@ -4,6 +4,8 @@ import numpy as np
 from PIL import Image
 import os
 
+#Function to implement the new feature
+#Takes in an image and returns a numpy array of the product image
 def highlighter(img):
 
     #Using the masked function on the image
@@ -22,16 +24,20 @@ def highlighter(img):
 
     process_image("img3.png")
 
+    #Taking two images to process
     img5 = cv.imread(img)
     img6 = cv.imread("img4.png")
 
+    #Processsing them to get a new image
     dst = cv.addWeighted(img5,1,img6,0.2,0)
 
+    #Removing the images
     os.remove("img1.png")
     os.remove("img2.png")
     os.remove("img3.png")
     os.remove("img4.png")
-    
+
+    #Returning the numpy array
     return dst
 
 def masked(img):
@@ -71,6 +77,8 @@ def masked(img):
     data.save('img2.png')
 
 def process_image(image):
+
+    #Declaring variables to use in the function
     count = 0
     total_count = 0
     color1 = (0, 0, 0)
@@ -78,13 +86,15 @@ def process_image(image):
     new_color = (255, 0, 0)
     img = Image.open(image).convert('RGB')
     w, h = img.size
-    
+
+    #Looping through the image and processing the pixels
     for i in range(w):
         for j in range((int)(h*0.20)):
             current_color = img.getpixel( (i,j) )
             if current_color == color2:
                 img.putpixel( (i,j), color1)
 
+    #Looping through the image and processing the pixels
     for i in range(w):
         for j in range((int)(h*0.20), h):
             current_color = img.getpixel( (i,j) )
@@ -93,12 +103,14 @@ def process_image(image):
             if current_color == color1:
                 img.putpixel( (i,j), new_color)
 
+    #Looping through the image and processing the pixels
     for i in range((int)(w*0.1)):
         for j in range(h):
             current_color = img.getpixel( (i,j) )
             if current_color == new_color:
                 img.putpixel( (i,j), color1)
 
+    #Looping through the image and processing the pixels
     for i in range((int)(w*0.9), w):
         for j in range(h):
             current_color = img.getpixel( (i,j) )
@@ -106,5 +118,7 @@ def process_image(image):
                 img.putpixel( (i,j), color1)
     img.save("img4.png")
 
+'''
 image = highlighter("C:/Users/manve/Desktop/ml-images/covid_image.png")
-cv.imshow('', image)
+print(type(image))
+cv.imshow('', image)'''
