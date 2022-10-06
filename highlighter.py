@@ -22,6 +22,18 @@ def highlighter(img):
 
     process_image("img3.png")
 
+    img5 = cv.imread(img)
+    img6 = cv.imread("img4.png")
+
+    dst = cv.addWeighted(img5,1,img6,0.2,0)
+
+    os.remove("img1.png")
+    os.remove("img2.png")
+    os.remove("img3.png")
+    os.remove("img4.png")
+    
+    return dst
+
 def masked(img):
 
     #read the image
@@ -66,7 +78,6 @@ def process_image(image):
     new_color = (255, 0, 0)
     img = Image.open(image).convert('RGB')
     w, h = img.size
-    print(w , h)
     
     for i in range(w):
         for j in range((int)(h*0.20)):
@@ -95,4 +106,5 @@ def process_image(image):
                 img.putpixel( (i,j), color1)
     img.save("img4.png")
 
-highlighter("C:/Users/manve/Desktop/ml-images/covid_image.png")
+image = highlighter("C:/Users/manve/Desktop/ml-images/covid_image.png")
+cv.imshow('', image)
