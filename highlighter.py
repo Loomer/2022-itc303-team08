@@ -4,6 +4,19 @@ import numpy as np
 from PIL import Image
 import os
 
+def highlighter(img):
+
+  #Using the masked function on the image
+  masked(img)
+
+  img1 = cv.imread("img1.png")
+  img2 = cv.imread("img2.png")
+
+  dst = cv.addWeighted(img1,1,img2,1,0)
+
+  data = Image.fromarray(dst)
+  data.save('img3.png')
+
 def masked(img):
 
   #read the image
@@ -40,4 +53,4 @@ def masked(img):
   data = Image.fromarray(mask)
   data.save('img2.png')
 
-masked("C:/Users/manve/Desktop/ml-images/covid_image.png")
+highlighter("C:/Users/manve/Desktop/ml-images/covid_image.png")
