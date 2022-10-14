@@ -37,8 +37,12 @@ def highlighter(img):
     os.remove("img3.png")
     os.remove("img4.png")
 
-    #Returning the numpy array
-    return dst
+    #Saving the image
+    data = Image.fromarray(dst)
+    data.save('output.png')
+
+    '''#Returning the numpy array
+    return dst'''
 
 def masked(img):
 
@@ -83,7 +87,7 @@ def process_image(image):
     total_count = 0
     color1 = (0, 0, 0)
     color2 = (255, 255, 255)
-    new_color = (255, 0, 0)
+    new_color = (0, 0, 255)
     img = Image.open(image).convert('RGB')
     w, h = img.size
 
@@ -118,7 +122,7 @@ def process_image(image):
                 img.putpixel( (i,j), color1)
     img.save("img4.png")
 
-'''
-image = highlighter("C:/Users/manve/Desktop/ml-images/covid_image.png")
+highlighter("C:/Users/manve/Desktop/ml-images/covid_image_github.png")
+'''image = highlighter("C:/Users/manve/Desktop/ml-images/covid_image_github.png")
 print(type(image))
 cv.imshow('', image)'''
